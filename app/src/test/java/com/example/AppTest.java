@@ -21,12 +21,10 @@ class AppTest {
 
   @BeforeEach
   void setUp() {
-    // 시간 관계상 통합테스트 코드 먼저...
     Category man = categorySearch.addRootCategory("남자");
     List<Category> manBelows = categorySearch.addCategoryList(List.of("엑소", "방탄소년단"), man.getId());
-    List<Category> exsoBelowCategories =
-      categorySearch.addCategoryAndBoardWithNames(List.of("공지사항", "첸", "백현", "시우민"),
-        manBelows.get(0).getId());
+    categorySearch.addCategoryAndBoardWithNames(List.of("공지사항", "첸", "백현", "시우민"),
+      manBelows.get(0).getId());
     categorySearch.addCategoryAndBoardWithNames(List.of("공지사항"), manBelows.get(1).getId());
     Board anonymousBoard = categorySearch.addBoard("익명게시판");
 

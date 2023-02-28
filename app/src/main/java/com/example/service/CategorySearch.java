@@ -14,14 +14,9 @@ public interface CategorySearch {
 
   Board addBoard(String name);
 
-  List addBoardList(List<String> names);
-
   List addCategoryList(List<String> names, long pid);
 
   CategoryBoardRalation addCategoryBoardRalation(Category category, Board board);
-
-  List addCategoryBoardRalationList(List<Category> categories,
-                                    List<Board> boards);
 
 
   List addCategoryAndBoardWithNames(List<String> names, long pid);

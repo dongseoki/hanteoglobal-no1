@@ -25,7 +25,7 @@ public class HashMapCategorySearch implements CategorySearch {
 
   private Map<String, List<Category>> categoryNameMap = new HashMap();
   // key : 카테고리 이름.
-  // 완전일치만 허용하도록 하겠습니다.
+  // 완전일치만 허용
 
   private Map<Long, Board> boardMap = new HashMap();
   // key : Board의 id.
@@ -103,16 +103,6 @@ public class HashMapCategorySearch implements CategorySearch {
   }
 
   @Override
-  public List addBoardList(List<String> names) {
-    List<Board> boardList = new ArrayList<>();
-    for (String name : names
-    ) {
-      boardList.add(addBoard(name));
-    }
-    return boardList;
-  }
-
-  @Override
   public List addCategoryAndBoardWithNames(List<String> names, long pid) {
     List<Category> categoryList = new ArrayList<>();
     for (String name : names
@@ -123,17 +113,6 @@ public class HashMapCategorySearch implements CategorySearch {
       addCategoryBoardRalation(category, board);
     }
     return categoryList;
-  }
-
-  @Override
-  public List addCategoryBoardRalationList(List<Category> categories,
-                                           List<Board> boards) {
-    List<CategoryBoardRalation> relationList = new ArrayList<>();
-    final int SIZE = categories.size();
-    for (int i = 0; i < SIZE; i++) {
-      relationList.add(addCategoryBoardRalation(categories.get(i), boards.get(i)));
-    }
-    return relationList;
   }
 
 
