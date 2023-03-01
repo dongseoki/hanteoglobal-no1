@@ -36,34 +36,20 @@ public class HashMapCategorySearch implements CategorySearch {
   private Long boardNewId = 1L;
   private Long categoryBoardNewId = 1L;
 
-  public void pushToCategoryParentMap(Category category) {
-    if (!categoryParentMap.containsKey(category.getPid())) {
-      categoryParentMap.put(category.getPid(), new ArrayList<>());
+  public void pushToMapIfValueIsList(Map targetMap, Object key, Object Value) {
+    if (!targetMap.containsKey(key)) {
+      targetMap.put(key, new ArrayList<>());
     }
-    categoryParentMap.get(category.getPid()).add(category);
-  }
-
-  public void pushToCategoryBoardRelationMap(CategoryBoardRalation categoryBoardRalation) {
-    if (!categoryBoardRelationMap.containsKey(categoryBoardRalation.getCategoryId())) {
-      categoryBoardRelationMap.put(categoryBoardRalation.getCategoryId(), new ArrayList<>());
-    }
-    categoryBoardRelationMap.get(categoryBoardRalation.getCategoryId()).add(categoryBoardRalation);
-  }
-
-  public void pushToCategoryNameMap(Category category) {
-    if (!categoryNameMap.containsKey(category.getName())) {
-      categoryNameMap.put(category.getName(), new ArrayList<>());
-    }
-    categoryNameMap.get(category.getName()).add(category);
-
+    List data = (List) (targetMap.get(key));
+    data.add(Value);
   }
 
   @Override
   public Category addRootCategory(String name) {
     Category category = new Category(categoryNewId++, name);
-    pushToCategoryParentMap(category);
+    pushToMapIfValueIsList(categoryParentMap, category.getPid(), category);
     categoryMap.put(category.getId(), category);
-    pushToCategoryNameMap(category);
+    pushToMapIfValueIsList(categoryNameMap, category.getName(), category);
     return category;
   }
 
@@ -71,9 +57,9 @@ public class HashMapCategorySearch implements CategorySearch {
   public Category addCategory(String name, long pid) {
     Category category = new Category(pid, categoryNewId++, name);
 
-    pushToCategoryParentMap(category);
+    pushToMapIfValueIsList(categoryParentMap, category.getPid(), category);
     categoryMap.put(category.getId(), category);
-    pushToCategoryNameMap(category);
+    pushToMapIfValueIsList(categoryNameMap, category.getName(), category);
     return category;
   }
 
@@ -88,7 +74,8 @@ public class HashMapCategorySearch implements CategorySearch {
   public CategoryBoardRalation addCategoryBoardRalation(Category category, Board board) {
     CategoryBoardRalation categoryBoardRalation =
       new CategoryBoardRalation(categoryBoardNewId, category.getId(), board.getId());
-    pushToCategoryBoardRelationMap(categoryBoardRalation);
+    pushToMapIfValueIsList(categoryBoardRelationMap, categoryBoardRalation.getCategoryId(),
+      categoryBoardRalation);
     return categoryBoardRalation;
   }
 
